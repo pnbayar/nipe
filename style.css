@@ -1,43 +1,96 @@
-body {
-  font-family: Arial, sans-serif;
+/* Reset some default styles */
+body, h1, h2, p, ul, li {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f9fb;
+  color: #222;
   line-height: 1.6;
-  background: #f9f9f9;
-  color: #333;
+  min-height: 100vh;
 }
 
 header {
-  background: #004080;
-  color: white;
-  padding: 2rem 1rem;
+  background: linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%);
+  color: #fff;
+  padding: 2rem 1rem 1.2rem 1rem;
   text-align: center;
-}
-
-main {
-  padding: 2rem;
-}
-
-.section {
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
   margin-bottom: 2rem;
 }
 
-h2 {
-  color: #004080;
+header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+header p {
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+
+main {
+  max-width: 700px;
+  margin: 2.5rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(79, 140, 255, 0.07);
+}
+
+.section {
+  margin-bottom: 2.2rem;
+}
+
+.section h2 {
+  color: #4f8cff;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+ul {
+  list-style: disc inside;
+  padding-left: 1.2em;
+}
+
+li {
+  margin-bottom: 0.7em;
+  font-size: 1.05rem;
 }
 
 a {
-  color: #004080;
+  color: #38c6ff;
   text-decoration: none;
+  transition: color 0.2s;
 }
 
 a:hover {
+  color: #4f8cff;
   text-decoration: underline;
 }
 
 footer {
   text-align: center;
-  padding: 1rem;
-  background: #eee;
-  font-size: 0.9rem;
+  padding: 1.2rem 0 0.7rem 0;
+  color: #888;
+  font-size: 0.98rem;
+  background: none;
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+  main {
+    margin: 1.2rem;
+    padding: 1rem;
+  }
+  header {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
 }
