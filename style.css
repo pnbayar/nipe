@@ -7,24 +7,25 @@ body, h1, h2, p, ul, li {
 
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f7f9fb;
+  background: linear-gradient(135deg, #e3f0ff 0%, #f8f9fa 100%);
   color: #222;
   line-height: 1.6;
   min-height: 100vh;
 }
 
 header {
-  background: linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%);
+  background: linear-gradient(90deg, #0d6efd 70%, #38b6ff 100%);
   color: #fff;
   padding: 2rem 1rem 1.2rem 1rem;
   text-align: center;
-  border-radius: 0 0 18px 18px;
-  box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+  border-radius: 0 0 1.5rem 1.5rem;
+  box-shadow: 0 4px 24px rgba(13,110,253,0.08);
   margin-bottom: 2rem;
 }
 
 header h1 {
-  font-size: 2.2rem;
+  font-size: 2.3rem;
+  font-weight: 700;
   margin-bottom: 0.5rem;
   letter-spacing: 1px;
 }
@@ -35,12 +36,12 @@ header p {
 }
 
 main {
-  max-width: 700px;
+  max-width: 600px;
   margin: 2.5rem auto;
-  padding: 1.5rem;
+  padding: 2.5rem 2rem 2rem 2rem;
   background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 4px 24px rgba(79, 140, 255, 0.07);
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px rgba(13,110,253,0.06);
 }
 
 .section {
@@ -48,7 +49,8 @@ main {
 }
 
 .section h2 {
-  color: #4f8cff;
+  color: #0d6efd;
+  font-weight: 600;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -81,7 +83,11 @@ footer {
   padding: 1.2rem 0 0.7rem 0;
   color: #888;
   font-size: 0.98rem;
-  background: none;
+  background: #fff;
+  border-top: 1px solid #e3e3e3;
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 0 -2px 8px rgba(13,110,253,0.03);
+  margin-top: 2rem;
 }
 
 /* Responsive Design */
@@ -92,5 +98,15 @@ footer {
   }
   header {
     padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    margin-top: 1.2rem;
+  }
+  h1 {
+    font-size: 1.5rem;
   }
 }
