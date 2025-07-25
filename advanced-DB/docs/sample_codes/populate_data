@@ -1,0 +1,23 @@
+-- Insert platforms
+INSERT INTO dim_platform (name, category, metadata) VALUES
+('YouTube', 'Video', '{"region": "global", "ad_supported": true}'),
+('Spotify', 'Audio', '{"subscription": "premium", "bitrate": "320kbps"}');
+
+-- Insert users
+INSERT INTO dim_user (username, age, country) VALUES
+('alice123', 25, 'India'),
+('bob456', 30, 'USA');
+
+-- Insert date
+INSERT INTO dim_date (full_date, day, month, year) VALUES
+('2025-07-21', 21, 7, 2025);
+
+-- Insert content
+INSERT INTO dim_content (title, content_type, tags, media_info) VALUES
+('Chill Beats', 'Audio', ARRAY['relaxing', 'instrumental'], '{"duration": "2h", "quality": "HD"}'),
+('Tech Review', 'Video', ARRAY['gadgets', '2025'], '{"duration": "15min", "resolution": "1080p"}');
+
+-- Insert fact (engagement)
+INSERT INTO fact_engagement (user_id, content_id, platform_id, date_id, watch_time, rating, interaction) VALUES
+(1, 1, 2, 1, 3600, 4.5, '{"liked": true, "shared": false}'),
+(2, 2, 1, 1, 900, 5.0, '{"liked": true, "shared": true}');
