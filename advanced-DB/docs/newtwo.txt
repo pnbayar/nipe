@@ -1,0 +1,7 @@
+CREATE TABLE pets (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    breed VARCHAR(50),
+    age INT,
+    owner VARCHAR(50)
+);

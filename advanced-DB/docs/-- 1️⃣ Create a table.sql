@@ -17,7 +17,7 @@ SELECT id, name, breed, age
   FROM pets
  WHERE age > 2
  ORDER BY age DESC;
--- 4️⃣ Update a pet's age
+--  Update a pet's age
 UPDATE pets 
  SET age = 4
  WHERE name = 'Milo';                   
