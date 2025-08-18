@@ -1,0 +1,4 @@
+
+class Config:
+    SQLALCHEMY_DATABASE_URI = DATABASE_URL="postgresql://neondb_owner:npg_UlV9mKT8ybQz@ep-winter-bread-a18ug9kr-pooler.ap-southeast-1.aws.neon.tech/MyDB?sslmode=require&channel_binding=require"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
