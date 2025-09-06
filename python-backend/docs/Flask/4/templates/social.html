@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Media Links</title>
+</head>
+<body>
+    <h2>Social Media Links</h2>
+    <ul>
+        {% for name, url in links.items() %}
+            <li><a href="{{ url }}" target="_blank">{{ name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
