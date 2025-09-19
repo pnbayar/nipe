@@ -1,0 +1,10 @@
+-- Factorial calculation using a recursive CTE in PostgreSQL
+
+WITH RECURSIVE FactorialCTE(n, factorial) AS (
+    SELECT 1 AS n, 1 AS factorial
+    UNION ALL
+    SELECT n + 1, factorial * (n + 1)
+    FROM FactorialCTE
+    WHERE n < 10 -- Change 10 to compute factorial up to a different number
+)
+SELECT n, factorial FROM FactorialCTE;
