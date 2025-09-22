@@ -1,88 +1,35 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_mysqldb import MySQL
-from flask_session import Session
-from werkzeug.security import generate_password_hash, check_password_hash
+import mysql.connector
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Secret key for session management
-app.secret_key = "your_secret_key"
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="",
+    database="flaskdb"
+)
+cursor = db.cursor()
 
-# Session configuration
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+@app.route('/users', methods=['GET'])
+def get_users():
+    cursor.execute("SELECT * FROM users")
+    return jsonify(cursor.fetchall())
 
-# MySQL Config
-app.config["MYSQL_HOST"] = "localhost"
-app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = ""
-app.config["MYSQL_DB"] = "flask_auth"
-
-mysql = MySQL(app)
-
-@app.route("/")
-def home():
-    if "user" in session:
-        return f"Hello, {session['user']}! <a href='/logout'>Logout</a>"
-    return "You are not logged in. <a href='/login'>Login</a> or <a href='/register'>Register</a>"
-
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = generate_password_hash(request.form["password"])
-
-        cur = mysql.connection.cursor()
-        try:
-            cur.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, password))
-            mysql.connection.commit()
-            flash("Registration successful! Please login.", "success")
-            return redirect(url_for("login"))
-        except:
-            flash("Username already exists!", "danger")
-        finally:
-            cur.close()
-
-    return '''
-    <form method="post">
-        Username: <input type="text" name="username" required><br>
-        Password: <input type="password" name="password" required><br>
+@app.route('/createuser', methods=['POST','GET'])
+def add_users():
+    if(request.method != 'POST'):
+        return '''<form method="post">
+        Username: <input type="text" name="name" required><br>
+        Password: <input type="email" name="email" required><br>
         <input type="submit" value="Register">
-    </form>
-    '''
+        </form>'''
+    else:
+        name=request.form["name"]
+        email=request.form["email"]
+        cursor.execute("INSERT INTO users (name, email) VALUES (%s, %s)", (name, email))
+        db.commit()
+        return jsonify({"message": "User added successfully!"})
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE username=%s", [username])
-        user = cur.fetchone()
-        cur.close()
-
-        if user and check_password_hash(user[2], password):  # user[2] = password column
-            session["user"] = username
-            flash("Login successful!", "success")
-            return redirect(url_for("home"))
-        else:
-            flash("Invalid credentials!", "danger")
-
-    return '''
-    <form method="post">
-        Username: <input type="text" name="username" required><br>
-        Password: <input type="password" name="password" required><br>
-        <input type="submit" value="Login">
-    </form>
-    ''' 
-  
-@app.route("/logout")
-def logout():
-    session.pop("user", None)
-    flash("You have been logged out.", "info")
-    return redirect(url_for("home"))
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

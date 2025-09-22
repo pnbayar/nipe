@@ -1,0 +1,48 @@
+--Range Partitioning
+CREATE TABLE orders (
+  order_id SERIAL PRIMARY KEY,
+  customer_id INT,
+  order_date DATE,
+  total_amount DECIMAL
+) PARTITION BY RANGE (order_date);
+
+CREATE TABLE orders_2023_01 PARTITION OF orders
+  FOR VALUES FROM ('2023-01-01') TO ('2023-01-31');
+
+CREATE TABLE orders_2023_02 PARTITION OF orders
+  FOR VALUES FROM ('2023-02-01') TO ('2023-02-28');
+
+--Hash Partitioning
+CREATE TABLE customers (
+  customer_id SERIAL PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100)
+) PARTITION BY HASH (customer_id);
+
+CREATE TABLE customers_part_1 PARTITION OF customers
+  FOR VALUES WITH (MODULUS 4, REMAINDER 0);
+
+CREATE TABLE customers_part_2 PARTITION OF customers
+  FOR VALUES WITH (MODULUS 4, REMAINDER 1);
+
+CREATE TABLE customers_part_3 PARTITION OF customers
+  FOR VALUES WITH (MODULUS 4, REMAINDER 2);
+
+CREATE TABLE customers_part_4 PARTITION OF customers
+  FOR VALUES WITH (MODULUS 4, REMAINDER 3);
+
+--sequential query
+EXPLAIN ANALYZE
+SELECT order_date, SUM(total_amount) AS daily_revenue
+FROM orders
+GROUP BY order_date
+ORDER BY order_date;
+
+--parallel query
+SET max_parallel_workers_per_gather = 4;
+
+EXPLAIN ANALYZE
+SELECT order_date, SUM(total_amount) AS daily_revenue
+FROM orders
+GROUP BY order_date
+ORDER BY order_date;
