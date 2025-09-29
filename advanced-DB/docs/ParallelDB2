@@ -1,9 +1,12 @@
---Range Partitioning
+--CREATE DATABASE ecomm_db;
+
+-- Range Partitioning
 CREATE TABLE orders (
-  order_id SERIAL PRIMARY KEY,
+  order_id SERIAL,
   customer_id INT,
   order_date DATE,
-  total_amount DECIMAL
+  total_amount DECIMAL,
+  PRIMARY KEY (order_id, order_date)  -- Include partition key in PK
 ) PARTITION BY RANGE (order_date);
 
 CREATE TABLE orders_2023_01 PARTITION OF orders

@@ -1,0 +1,8 @@
+<h1>My Blog</h1>
+<ul>
+  {% for post in posts %}
+    <li><b>{{ post.title }}</b>: {{ post.content }}</li>
+  {% endfor %}
+</ul>
+
+

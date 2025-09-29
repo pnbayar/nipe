@@ -5,6 +5,6 @@ WITH RECURSIVE FactorialCTE(n, factorial) AS (
     UNION ALL
     SELECT n + 1, factorial * (n + 1)
     FROM FactorialCTE
-    WHERE n < 10 -- Change 10 to compute factorial up to a different number
+    WHERE n < 10
 )
-SELECT n, factorial FROM FactorialCTE;
+SELECT n, factorial FROM FactorialCTE wHERE n = 8;
