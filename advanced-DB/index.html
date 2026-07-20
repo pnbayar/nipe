@@ -1,63 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Advanced Databases</title>
-  <link rel="stylesheet" href="../style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>advanced_databases · NIPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root{
+    --bg:#f4f6fa;
+    --panel:#ffffff;
+    --ink:#161b26;
+    --muted:#65728a;
+    --line:#e3e7ef;
+    --accent:#2f5fed;
+    --accent-bg:#ebf0ff;
+    --success:#16a34a;
+    --success-bg:#e9f9ef;
+    --key:#c8790a;
+    --code-bg:#101828;
+    --code-text:#d7dde8;
+    --code-comment:#6b7688;
+    --code-kw:#7dc4ff;
+    --code-str:#8fe3a6;
+    --code-name:#f2c572;
+    --mono:'Space Mono', monospace;
+    --sans:'Manrope', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:34px 20px 90px; background:var(--bg); color:var(--ink);
+    font-family:var(--sans);
+  }
+  .container{max-width:980px; margin:0 auto;}
+
+  /* ---------- console header ---------- */
+  .console{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    box-shadow:0 1px 3px rgba(22,27,38,0.05);
+    overflow:hidden;
+  }
+  .console-top{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
+    padding:22px 26px; border-bottom:1px solid var(--line);
+  }
+  .db-id{ display:flex; align-items:center; gap:12px; }
+  .db-id .icon{
+    width:38px; height:38px; border-radius:8px; background:var(--accent-bg); color:var(--accent);
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;
+  }
+  .db-id .name{ font-family:var(--mono); font-weight:700; font-size:1.15rem; color:var(--ink); }
+  .db-id .path{ font-family:var(--mono); font-size:0.72rem; color:var(--muted); }
+  .status{
+    display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:0.75rem;
+    color:var(--success); background:var(--success-bg); padding:5px 12px; border-radius:999px;
+    border:1px solid #cdeed8;
+  }
+  .status .blip{ width:7px; height:7px; border-radius:50%; background:var(--success); }
+
+  .console-meta{
+    display:flex; flex-wrap:wrap; gap:24px; padding:16px 26px;
+    font-family:var(--mono); font-size:0.78rem; color:var(--muted); border-bottom:1px solid var(--line);
+  }
+  .console-meta span strong{ color:var(--ink); font-weight:700; }
+
+  .console-nav{ display:flex; flex-wrap:wrap; gap:2px; padding:10px 20px; }
+  .console-nav a{
+    font-family:var(--mono); font-size:0.78rem; color:var(--muted); text-decoration:none;
+    padding:9px 14px; border-radius:6px;
+  }
+  .console-nav a:hover{ background:var(--accent-bg); color:var(--accent); }
+
+  /* ---------- quick links ---------- */
+  .quick-links{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:22px 0 6px; }
+  .btn{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    padding:13px; border-radius:8px; text-decoration:none; font-weight:700;
+    font-family:var(--mono); font-size:0.8rem; transition:transform .15s ease, filter .15s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-home{ background:var(--ink); color:#fff; }
+  .btn-syllabus{ background:var(--accent); color:#fff; }
+
+  /* ---------- section shell ---------- */
+  section{ margin-top:44px; }
+  .sec-head{ display:flex; align-items:baseline; gap:10px; margin-bottom:16px; }
+  .sec-head .tag{
+    font-family:var(--mono); font-size:0.68rem; color:var(--accent); background:var(--accent-bg);
+    padding:3px 9px; border-radius:5px; text-transform:uppercase; letter-spacing:0.06em;
+  }
+  .sec-head h2{ font-size:1.25rem; margin:0; font-weight:800; }
+  .sec-head .rule{ flex:1; height:1px; background:var(--line); }
+  .sec-sub{ font-family:var(--mono); font-size:0.8rem; color:var(--muted); margin:-8px 0 18px; }
+
+  /* ---------- CREATE TABLE code block ---------- */
+  .sql-box{
+    background:var(--code-bg); border-radius:10px; overflow:hidden;
+    box-shadow:0 4px 16px rgba(16,24,40,0.18);
+  }
+  .sql-box .bar{
+    display:flex; align-items:center; gap:8px; padding:11px 18px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .sql-box .bar span{ font-family:var(--mono); font-size:0.72rem; color:var(--code-comment); }
+  .sql-box pre{
+    margin:0; padding:20px 22px 22px; font-family:var(--mono); font-size:0.84rem; line-height:1.85;
+    color:var(--code-text); overflow-x:auto;
+  }
+  .kw{ color:var(--code-kw); }
+  .nm{ color:var(--code-name); }
+  .cm{ color:var(--code-comment); }
+  .st{ color:var(--code-str); }
+
+  /* ---------- lab results grid ---------- */
+  .results{
+    width:100%; border-collapse:collapse; background:var(--panel);
+    border:1px solid var(--line); border-radius:10px; overflow:hidden;
+    font-size:0.92rem;
+  }
+  .results th{
+    background:#fafbfd; text-align:left; padding:12px 18px;
+    font-family:var(--mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--muted); border-bottom:1px solid var(--line);
+  }
+  .results td{ padding:14px 18px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  .results tr:last-child td{ border-bottom:none; }
+  .results tr:hover td{ background:#fafbfd; }
+  .results td.idx{ font-family:var(--mono); color:var(--key); width:20px; }
+  .pill{
+    font-family:var(--mono); font-size:0.68rem; padding:3px 10px; border-radius:999px;
+    background:var(--accent-bg); color:var(--accent); white-space:nowrap;
+  }
+
+  /* ---------- resources ---------- */
+  .resource-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+  .resource-card{
+    display:flex; align-items:flex-start; gap:14px;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:16px 18px; text-decoration:none; color:inherit;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .resource-card:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .resource-card .r-icon{
+    width:36px; height:36px; border-radius:8px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:0.95rem;
+  }
+  .ic-pdf{ background:#fdeceb; color:#cf222e; }
+  .ic-doc{ background:var(--accent-bg); color:var(--accent); }
+  .ic-folder{ background:#fff4e0; color:var(--key); }
+  .ic-web{ background:#eefaf1; color:var(--success); }
+  .resource-card .r-title{ font-weight:700; font-size:0.92rem; margin-bottom:2px; }
+  .resource-card .r-type{ font-family:var(--mono); font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; }
+
+  footer{
+    margin-top:60px; text-align:center; font-family:var(--mono); font-size:0.75rem; color:var(--muted);
+  }
+  footer .closer{ display:block; margin-top:6px; color:#9aa4b8; }
+
+  @media (max-width:640px){
+    .quick-links{ grid-template-columns:1fr; }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Advanced Databases (BCA Hons)</h1>
-    <p>Instructor: Mr. Praveen N | Class and Semester: BCA SEM - VII</p>
-    <nav>
-      <a href="../">Home</a>
-      <a href="docs/syllabus.pdf">Syllabus</a>
+<div class="container">
+
+  <div class="console">
+    <div class="console-top">
+      <div class="db-id">
+        <span class="icon"><i class="fas fa-database"></i></span>
+        <div>
+          <div class="name">advanced_databases</div>
+          <div class="path">nipe / bca-hons / sem-vii</div>
+        </div>
+      </div>
+      <span class="status"><span class="blip"></span>connected</span>
+    </div>
+    <div class="console-meta">
+      <span><strong>Instructor</strong> &nbsp;Mr. Praveen N</span>
+      <span><strong>Class</strong> &nbsp;BCA Honours</span>
+      <span><strong>Semester</strong> &nbsp;VII</span>
+    </div>
+    <nav class="console-nav">
+      <a href="https://pnbayar.github.io/nipe/">Home</a>
+      <a href="https://pnbayar.github.io/nipe/advanced-DB/docs/syllabus.pdf">Syllabus</a>
       <a href="#labs">Lab</a>
       <a href="#resources">Resources</a>
     </nav>
-  </header>
-<main class="container my-4">
+  </div>
+
+  <div class="quick-links">
+    <a href="https://pnbayar.github.io/nipe/" class="btn btn-home"><i class="fas fa-house"></i> Course Home</a>
+    <a href="https://pnbayar.github.io/nipe/advanced-DB/docs/syllabus.pdf" target="_blank" class="btn btn-syllabus"><i class="fas fa-file-pdf"></i> Download Syllabus</a>
+  </div>
+
   <section id="syllabus">
-    <h2>Syllabus Overview</h2>
-    <ul>
-      <li>Data Warehousing and Multimedia Databases</li>
-      <li>Structured and Complex Data Types in SQL</li>
-      <li>XML, XPath, XQuery</li>
-      <li>Parallel and Distributed Databases</li>
-      <li>ORDBMS, Deductive Databases</li>
-      <li>MongoDB & NoSQL</li>
-      <li>Cloud Database Deployment</li>
-    </ul>
+    <div class="sec-head"><span class="tag">Schema</span><h2>Syllabus Overview</h2><span class="rule"></span></div>
+    <p class="sec-sub">-- 7 units, defined as a single table</p>
+    <div class="sql-box">
+      <div class="bar"><span>schema.sql</span></div>
+      <pre><span class="kw">CREATE TABLE</span> <span class="nm">syllabus</span> (
+  unit_01  TEXT, <span class="cm">-- Data Warehousing and Multimedia Databases</span>
+  unit_02  TEXT, <span class="cm">-- Structured and Complex Data Types in SQL</span>
+  unit_03  TEXT, <span class="cm">-- XML, XPath, XQuery</span>
+  unit_04  TEXT, <span class="cm">-- Parallel and Distributed Databases</span>
+  unit_05  TEXT, <span class="cm">-- ORDBMS, Deductive Databases</span>
+  unit_06  TEXT, <span class="cm">-- MongoDB &amp; NoSQL</span>
+  unit_07  TEXT  <span class="cm">-- Cloud Database Deployment</span>
+);</pre>
+    </div>
   </section>
 
   <section id="labs">
-    <h2>Lab Activities</h2>
-    <ol>
-      <li>Design & implement a data warehouse schema</li>
-      <li>Structured SQL with inheritance and references</li>
-      <li>Use XQuery to process XML data</li>
-      <li>Deploy MongoDB and test aggregation</li>
-    </ol>
+    <div class="sec-head"><span class="tag">Query</span><h2>Lab Activities</h2><span class="rule"></span></div>
+    <p class="sec-sub">-- SELECT * FROM labs ORDER BY id;</p>
+    <table class="results">
+      <thead>
+        <tr><th>#</th><th>Lab</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="idx">01</td><td>Design &amp; implement a data warehouse schema</td><td><span class="pill">scheduled</span></td></tr>
+        <tr><td class="idx">02</td><td>Structured SQL with inheritance and references</td><td><span class="pill">scheduled</span></td></tr>
+        <tr><td class="idx">03</td><td>Use XQuery to process XML data</td><td><span class="pill">scheduled</span></td></tr>
+        <tr><td class="idx">04</td><td>Deploy MongoDB and test aggregation</td><td><span class="pill">scheduled</span></td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section id="resources">
-    <h2>Resources</h2>
-    <ul>
-      <li><a href="docs/syllabus.pdf">Syllabus PDF</a></li>
-      <li><a href="https://drive.google.com/file/d/1IgRV2KFXutfQ4Nl23uBG5M9L2NUgmosA/view?usp=sharing">DB Case Studies</a></li>
-      <li><a href="https://docs.google.com/document/d/1_vAswDejQ7JlE8Saklv-9g8Aqr9jd0rgaWIIBNj_XdA/edit?usp=sharing">PrallelDB Lab Excercise</a></li>
-      <li> <a href="https://drive.google.com/drive/folders/1fwfWdX2feD6r3mX-fbeS2rVbI9xSI60m?usp=sharing" target="_blank">Reference Materials</a></li>
-      <li><a href="https://www.mongodb.com/docs/manual/">MongoDB Documentation</a></li>
-        <li><a href="https://www.w3schools.com/xml/">W3Schools XML Tutorial</a></li>
-        <li><a href="https://docs.oracle.com/en/database/">Oracle Database Overview</a></li>
-        <li><a href="https://www.ibm.com/docs/en/db2">IBM DB2 Documentation</a></li>
-        <li><a href="https://www.postgresql.org/docs/">PostgreSQL Documentation</a></li>
-    </ul>
+    <div class="sec-head"><span class="tag">References</span><h2>Resources</h2><span class="rule"></span></div>
+    <p class="sec-sub">-- external links &amp; reference material</p>
+    <div class="resource-grid">
+      <a class="resource-card" href="https://pnbayar.github.io/nipe/advanced-DB/docs/syllabus.pdf" target="_blank">
+        <span class="r-icon ic-pdf"><i class="fas fa-file-pdf"></i></span>
+        <div><div class="r-title">Syllabus PDF</div><div class="r-type">Document</div></div>
+      </a>
+      <a class="resource-card" href="https://drive.google.com/file/d/1IgRV2KFXutfQ4Nl23uBG5M9L2NUgmosA/view?usp=sharing" target="_blank">
+        <span class="r-icon ic-doc"><i class="fas fa-layer-group"></i></span>
+        <div><div class="r-title">DB Case Studies</div><div class="r-type">Drive File</div></div>
+      </a>
+      <a class="resource-card" href="https://docs.google.com/document/d/1_vAswDejQ7JlE8Saklv-9g8Aqr9jd0rgaWIIBNj_XdA/edit?usp=sharing" target="_blank">
+        <span class="r-icon ic-doc"><i class="fas fa-file-lines"></i></span>
+        <div><div class="r-title">Parallel DB Lab Exercise</div><div class="r-type">Google Doc</div></div>
+      </a>
+      <a class="resource-card" href="https://drive.google.com/drive/folders/1fwfWdX2feD6r3mX-fbeS2rVbI9xSI60m?usp=sharing" target="_blank">
+        <span class="r-icon ic-folder"><i class="fas fa-folder-open"></i></span>
+        <div><div class="r-title">Reference Materials</div><div class="r-type">Drive Folder</div></div>
+      </a>
+      <a class="resource-card" href="https://www.mongodb.com/docs/manual/" target="_blank">
+        <span class="r-icon ic-web"><i class="fas fa-globe"></i></span>
+        <div><div class="r-title">MongoDB Documentation</div><div class="r-type">External Site</div></div>
+      </a>
+      <a class="resource-card" href="https://www.w3schools.com/xml/" target="_blank">
+        <span class="r-icon ic-web"><i class="fas fa-globe"></i></span>
+        <div><div class="r-title">W3Schools XML Tutorial</div><div class="r-type">External Site</div></div>
+      </a>
+      <a class="resource-card" href="https://docs.oracle.com/en/database/" target="_blank">
+        <span class="r-icon ic-web"><i class="fas fa-globe"></i></span>
+        <div><div class="r-title">Oracle Database Overview</div><div class="r-type">External Site</div></div>
+      </a>
+      <a class="resource-card" href="https://www.ibm.com/docs/en/db2" target="_blank">
+        <span class="r-icon ic-web"><i class="fas fa-globe"></i></span>
+        <div><div class="r-title">IBM DB2 Documentation</div><div class="r-type">External Site</div></div>
+      </a>
+      <a class="resource-card" href="https://www.postgresql.org/docs/" target="_blank">
+        <span class="r-icon ic-web"><i class="fas fa-globe"></i></span>
+        <div><div class="r-title">PostgreSQL Documentation</div><div class="r-type">External Site</div></div>
+      </a>
+    </div>
   </section>
-</main>
+
   <footer>
-    <p>&copy; 2025 NIPE | Maintained by Praveen N</p>
+    © 2025 NIPE | Maintained by Praveen N
+    <span class="closer">-- connection closed --</span>
   </footer>
+
+</div>
 </body>
 </html>
