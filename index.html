@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Praveen N — Assistant Professor, NIPE</title>
-<meta name="description" content="Praveen N, Assistant Professor at NIPE (NITTE Deemed to be University). Courses in Software Engineering, Algorithms, Automation & Configuration Management, and Backend Development.">
+<title>Dr. Praveen N — Assistant Professor, NIPE</title>
+<meta name="description" content="Dr. Praveen N, Assistant Professor at NIPE (NITTE Deemed to be University). Courses in Software Engineering, Algorithms, Automation & Configuration Management, and Backend Development.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -135,11 +135,9 @@
 
   /* About */
   .about-grid{display:grid; grid-template-columns:220px 1fr; gap:48px; align-items:start;}
-  .monogram{
-    width:180px; height:180px; border:1px solid var(--line-strong); border-radius:2px;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Source Serif 4', serif; font-size:56px; color:var(--brass);
-    background:linear-gradient(160deg, rgba(198,154,58,0.10), transparent);
+  .portrait{
+    width:180px; height:225px; border:1px solid var(--line-strong); border-radius:2px;
+    display:block; object-fit:cover; object-position:center top;
   }
   .about-text p{color:var(--paper-dim); max-width:640px;}
   .about-text p + p{margin-top:16px;}
@@ -231,7 +229,7 @@
     .hero-inner{grid-template-columns:1fr;}
     .card-id{min-width:0;}
     .about-grid{grid-template-columns:1fr;}
-    .monogram{width:120px; height:120px; font-size:38px;}
+    .portrait{width:120px; height:150px;}
     .focus-list{grid-template-columns:1fr;}
     .catalog{grid-template-columns:1fr;}
     .contact-grid{grid-template-columns:1fr;}
@@ -246,7 +244,7 @@
 
 <header class="site-nav">
   <div class="nav-inner">
-    <a class="nav-mark" href="#top"><span class="dot"></span>PRAVEEN&nbsp;N.</a>
+    <a class="nav-mark" href="#top"><span class="dot"></span>DR.&nbsp;PRAVEEN&nbsp;N.</a>
     <nav class="nav-links">
       <a href="#about">About</a>
       <a href="#courses">Courses</a>
@@ -261,7 +259,7 @@
     <div class="wrap hero-inner">
       <div>
         <span class="eyebrow">Nitte Institute of Professional Education</span>
-        <h1 class="hero-name">Praveen&nbsp;N.</h1>
+        <h1 class="hero-name">Dr.&nbsp;Praveen&nbsp;N.</h1>
         <p class="hero-role">Assistant Professor · <b>Dept. of BCA (Honours)</b> · NITTE (Deemed to be University)</p>
         <p class="hero-lede">I teach and build course material in backend engineering, database systems, and cloud automation — pairing hands-on labs with the underlying theory so students leave able to ship, not just describe.</p>
         <div class="hero-actions">
@@ -287,9 +285,9 @@
         </div>
       </div>
       <div class="about-grid">
-        <div class="monogram">PN</div>
+        <img class="portrait" src="photo.jpg" alt="Portrait of Dr. Praveen N" width="180" height="225">
         <div class="about-text">
-          <p>I'm Praveen N, an Assistant Professor at NIPE, focused on teaching and mentoring students in modern backend technologies, database systems, and cloud deployments. My courses integrate hands-on labs with theoretical foundations, so students build a working intuition for the systems they're studying — not just the vocabulary.</p>
+          <p>I'm Dr. Praveen N, an Assistant Professor at NIPE, focused on teaching and mentoring students in modern backend technologies, database systems, and cloud deployments. My courses integrate hands-on labs with theoretical foundations, so students build a working intuition for the systems they're studying — not just the vocabulary.</p>
           <p>Across semesters, I've designed and run curricula spanning web frameworks, algorithm design, and infrastructure automation, with an emphasis on reproducible labs, real tooling, and assessment that mirrors industry practice.</p>
           <ul class="focus-list">
             <li>Python · Flask &amp; Django web development</li>
@@ -398,7 +396,7 @@ development and data management.</p>
 </main>
 
 <footer class="wrap">
-  <span>© 2025 Praveen N · NIPE, NITTE (Deemed to be University)</span>
+  <span>© 2025 Dr. Praveen N · NIPE, NITTE (Deemed to be University)</span>
   <span>Mangaluru, Karnataka, India</span>
 </footer>
 
